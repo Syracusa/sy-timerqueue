@@ -1,3 +1,7 @@
+# About
+Time wheel implementation with circular linked list. For personal purpose.  
+You should call timewheel_work() frequently as your precision interval needed.
+
 # How to build
 > mkdir build && cd build<br> 
 > cmake ..<br> 
