@@ -65,7 +65,7 @@ typedef struct
     void *arg;
     void (*interval_callback)(void *arg);
     char name[MAX_timewheel_job_NAMELEN];
-} IntervalJob;
+} TwJob;
 
 void unregister_timewheel_job_all();
 
@@ -76,9 +76,9 @@ void unregister_timewheel_job_all();
         ij = NULL;                       \
     } while (0);
 
-void unregister_timewheel_job(IntervalJob *ij);
+void unregister_timewheel_job(TwJob *ij);
 
-IntervalJob *register_timewheel_job(void (*cb)(),
+TwJob *register_timewheel_job(void (*cb)(),
                                    int interval_us,
                                    int use_once,
                                    void *arg,

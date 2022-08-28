@@ -9,7 +9,7 @@ static void free_timewheel_job()
     CircularLL *ptr;
     cll_foreach(ptr, &job_list)
     {
-        IntervalJob *ij = (IntervalJob *)ptr;
+        TwJob *ij = (TwJob *)ptr;
         if (ij->delete_flag == 1)
         {
             ptr = ptr->prev;
@@ -34,18 +34,17 @@ static void free_timewheel_job()
 
 void unregister_timewheel_job_all()
 {
-    // int res = 0;
     CircularLL *ptr;
     cll_foreach(ptr, &job_list)
     {
-        IntervalJob *ij = (IntervalJob *)ptr;
+        TwJob *ij = (TwJob *)ptr;
         ij->delete_flag = 1;
     }
 
     free_timewheel_job();
 }
 
-void unregister_timewheel_job(IntervalJob *ij)
+void unregister_timewheel_job(TwJob *ij)
 {
     if (ij != NULL)
     {
@@ -57,13 +56,13 @@ void unregister_timewheel_job(IntervalJob *ij)
     }
 }
 
-IntervalJob *register_timewheel_job(void (*cb)(),
+TwJob *register_timewheel_job(void (*cb)(),
                                    int interval_us,
                                    int use_once,
                                    void *arg,
                                    char *name)
 {
-    IntervalJob *ij = malloc(sizeof(IntervalJob));
+    TwJob *ij = malloc(sizeof(TwJob));
 
     if (cb == NULL)
     {
@@ -96,7 +95,7 @@ int timewheel_work()
     CircularLL *ptr;
     cll_foreach(ptr, &job_list)
     {
-        IntervalJob *ij = (IntervalJob *)ptr;
+        TwJob *ij = (TwJob *)ptr;
         if (is_time_expired(&(ij->next_event_time), &currtime))
         {
             ij->interval_callback(ij->arg);
