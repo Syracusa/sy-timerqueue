@@ -4,8 +4,55 @@
 #include <time.h>
 #include "circular_ll.h"
 
-#define MAX_timewheel_job_NAMELEN 100
+#define MAX_TWJOB_NAMELEN 100
 
+/* Timewheel Job Structure */
+typedef struct
+{
+    CircularLL cll;
+    int interval_us;
+    int use_once;
+    int delete_flag;
+    struct timespec next_event_time;
+    void *arg;
+    void (*interval_callback)(void *arg);
+    char name[MAX_TWJOB_NAMELEN];
+} TwJob;
+
+/* Check time and excute registered jobs */
+int timewheel_work();
+
+/**
+ * @brief Register job in timewheel
+ * 
+ * @param cb - Function to execute later
+ * @param interval_us  - Execute interval
+ * @param use_once - if 1 then Job will unregistered after 1 execute
+ * @param arg - Argument to callback function
+ * @param name - Job name for debug purpose
+ * @return TwJob* 
+ */
+TwJob *register_timewheel_job(void (*cb)(),
+                              int interval_us,
+                              int use_once,
+                              void *arg,
+                              char *name);
+
+/* Unregister job in timewheel */
+void unregister_timewheel_job(TwJob *ij);
+
+/* Unregister all job */
+void unregister_timewheel_job_all();
+
+/* Unregister job and set ptr to NULL */
+#define unregister_timewheel_job_safe(ij) \
+    do                                    \
+    {                                     \
+        unregister_timewheel_job(ij);     \
+        ij = NULL;                        \
+    } while (0);
+
+/* Timespec Related Helper Function */
 static inline int timespec_add_usec(struct timespec *t,
                                     unsigned long usec)
 {
@@ -54,36 +101,5 @@ static inline int is_time_expired(struct timespec *sometime,
     }
     return res;
 }
-
-typedef struct
-{
-    CircularLL cll;
-    int interval_us;
-    int use_once;
-    int delete_flag;
-    struct timespec next_event_time;
-    void *arg;
-    void (*interval_callback)(void *arg);
-    char name[MAX_timewheel_job_NAMELEN];
-} TwJob;
-
-void unregister_timewheel_job_all();
-
-#define unregister_timewheel_job_safe(ij) \
-    do                                   \
-    {                                    \
-        unregister_timewheel_job(ij);     \
-        ij = NULL;                       \
-    } while (0);
-
-void unregister_timewheel_job(TwJob *ij);
-
-TwJob *register_timewheel_job(void (*cb)(),
-                                   int interval_us,
-                                   int use_once,
-                                   void *arg,
-                                   char *name);
-
-int timewheel_work();
 
 #endif
