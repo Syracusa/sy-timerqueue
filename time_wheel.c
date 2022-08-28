@@ -33,7 +33,7 @@ static void free_interval_job()
     }
 }
 
-void unregister_timerwheel_job_all()
+void unregister_timewheel_job_all()
 {
     // int res = 0;
     CircularLL *ptr;
@@ -46,7 +46,7 @@ void unregister_timerwheel_job_all()
     free_interval_job();
 }
 
-void unregister_timerwheel_job(IntervalJob *ij)
+void unregister_timewheel_job(IntervalJob *ij)
 {
     if (ij != NULL)
     {
@@ -58,7 +58,7 @@ void unregister_timerwheel_job(IntervalJob *ij)
     }
 }
 
-IntervalJob *register_timerwheel_job(void (*cb)(),
+IntervalJob *register_timewheel_job(void (*cb)(),
                                    int interval_us,
                                    int use_once,
                                    void *arg,
@@ -104,7 +104,7 @@ int timewheel_work()
 
             if (ij->use_once == 1)
             {
-                unregister_timerwheel_job(ij);
+                unregister_timewheel_job(ij);
             }
             else
             {
