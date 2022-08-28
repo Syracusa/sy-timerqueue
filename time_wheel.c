@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include "time_wheel.h"
 
-CircularLL job_list = {&job_list, &job_list};
-int job_num;
+static CircularLL job_list = {&job_list, &job_list};
 
 static void free_timewheel_job()
 {
