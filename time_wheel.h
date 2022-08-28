@@ -4,7 +4,7 @@
 #include <time.h>
 #include "circular_ll.h"
 
-#define MAX_INTERVAL_JOB_NAMELEN 100
+#define MAX_timewheel_job_NAMELEN 100
 
 static inline int timespec_add_usec(struct timespec *t,
                                     unsigned long usec)
@@ -64,7 +64,7 @@ typedef struct
     struct timespec next_event_time;
     void *arg;
     void (*interval_callback)(void *arg);
-    char name[MAX_INTERVAL_JOB_NAMELEN];
+    char name[MAX_timewheel_job_NAMELEN];
 } IntervalJob;
 
 void unregister_timewheel_job_all();

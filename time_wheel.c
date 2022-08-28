@@ -5,7 +5,7 @@
 CircularLL job_list = {&job_list, &job_list};
 int job_num;
 
-static void free_interval_job()
+static void free_timewheel_job()
 {
     CircularLL *ptr;
     cll_foreach(ptr, &job_list)
@@ -43,7 +43,7 @@ void unregister_timewheel_job_all()
         ij->delete_flag = 1;
     }
 
-    free_interval_job();
+    free_timewheel_job();
 }
 
 void unregister_timewheel_job(IntervalJob *ij)
@@ -118,7 +118,7 @@ int timewheel_work()
             timeouted++;
         }
     }
-    free_interval_job();
+    free_timewheel_job();
 
     return timeouted;
 }
