@@ -1,6 +1,9 @@
 # About
-Time wheel implementation with circular linked list. For personal purpose.  
+Time wheel implementation with circular linked list. Written in C. For personal purpose.  
 You should call timewheel_work() frequently as your precision interval needed.
+
+# OS Dependency
+Linux
 
 # How to build
 > mkdir build && cd build<br> 
