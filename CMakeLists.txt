@@ -10,4 +10,4 @@ set(CMAKE_BUILD_TYPE Debug)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
 
-add_executable(twtest main.c time_wheel.c circular_ll.c)
+add_executable(twtest main.c time_wheel.c)
