@@ -39,7 +39,7 @@ typedef struct
     int delete_flag;
     struct timespec next_event_time;
     void *arg;
-    void (*interval_callback)(void *arg);
+    void (*callback)(void *arg);
     char name[MAX_TWJOB_NAMELEN];
 } TwJob;
 

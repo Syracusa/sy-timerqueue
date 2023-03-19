@@ -133,7 +133,7 @@ TwJob *register_timewheel_job(void (*cb)(),
         return NULL;
     }
 
-    ij->interval_callback = cb;
+    ij->callback = cb;
     ij->interval_us = interval_us;
     ij->use_once = use_once;
     ij->delete_flag = 0;
@@ -160,7 +160,7 @@ int timewheel_work()
         TwJob *ij = (TwJob *)ptr;
         if (is_time_expired(&(ij->next_event_time), &currtime))
         {
-            ij->interval_callback(ij->arg);
+            ij->callback(ij->arg);
 
             if (ij->use_once == 1)
             {

@@ -1,13 +1,10 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(time_wheel 
+project(rbtree 
         VERSION 1.0
-        DESCRIPTION "Timewheel Implementation Example in C"
+        DESCRIPTION "Red-Black Tree Implementation from FreeBSD"
         LANGUAGES C)
 
-add_compile_options(-Wall)
-
 set(CMAKE_BUILD_TYPE Debug)
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-
-add_executable(twtest main.c time_wheel.c)
+add_executable(rbt "rbtree.c" "timerqueue.c" "test.c")

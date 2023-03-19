@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "time.h": "c",
+        "timerqueue.h": "c",
+        "functional": "c"
+    }
+}
