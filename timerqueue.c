@@ -41,11 +41,11 @@ static int compare_elem(const void *k1, const void *k2)
 
 void register_timerqueue_job(TqCtx *tq, TqElem *elem)
 {
-    clock_gettime(CLOCK_REALTIME, &elem->rbk.expire);
-    timespec_add_usec(&elem->rbk.expire, elem->interval_us);
+    clock_gettime(CLOCK_REALTIME, &elem->priv_rbk.expire);
+    timespec_add_usec(&elem->priv_rbk.expire, elem->interval_us);
 
-    elem->rbk.ptr = elem;
-    elem->rbn.key = &elem->rbk;
+    elem->priv_rbk.ptr = elem;
+    elem->priv_rbn.key = &elem->priv_rbk;
     elem->attached = 1;
     elem->active = 1;
     rbtree_insert(tq->rbt, (rbnode_type *)elem);
@@ -58,9 +58,9 @@ void timerqueue_work(TqCtx *tq)
 
     TqElem *first = (TqElem *)rbtree_first(tq->rbt);
 
-    while (check_expire(&(first->rbk.expire), &currtime))
+    while (check_expire(&(first->priv_rbk.expire), &currtime))
     {
-        rbtree_delete(tq->rbt, first->rbn.key);
+        rbtree_delete(tq->rbt, first->priv_rbn.key);
         if (first->active)
         {
             first->callback(first->arg);
@@ -71,7 +71,7 @@ void timerqueue_work(TqCtx *tq)
             }
             else
             {
-                timespec_add_usec(&first->rbk.expire, first->interval_us);
+                timespec_add_usec(&first->priv_rbk.expire, first->interval_us);
                 rbtree_insert(tq->rbt, (rbnode_type *)first);
             }
         }

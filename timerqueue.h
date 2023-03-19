@@ -23,14 +23,19 @@ typedef struct
 
 typedef struct
 {
-    rbnode_type rbn;
-    TqKey rbk;
-    int interval_us;
+    /* Privates */
+    rbnode_type priv_rbn;
+    TqKey priv_rbk;
 
-    int use_once;
+    /* if 0 then timerqueue will detatch this node */
     int active;
+
+    /* If 0 then safely free this elem */
     int attached;
 
+    /* User should write these field */
+    int interval_us;
+    int use_once;
     void *arg;
     void (*callback)(void *arg);
 } TqElem;
